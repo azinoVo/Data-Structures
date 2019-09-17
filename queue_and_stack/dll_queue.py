@@ -17,15 +17,15 @@ class Queue:
   def dequeue(self):
     if self.size > 0:
         self.size -= 1
-        self.storage.remove_from_head()
-        return self.storage.head
+        return self.storage.remove_from_head()
     else:
-        pass
+        return None
 
 # Returns the number of items in the queue
   def len(self):
+    # return self.storage.__len__() or
     return self.size
 
-print(Queue().enqueue(3))
-# print(Queue().dequeue())
-print(Queue().len())
+# print(Queue().enqueue(3))
+# # print(Queue().dequeue())
+# print(Queue().len())
