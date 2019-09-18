@@ -25,11 +25,12 @@ class LRUCache:
     # Does the key exist in our queue?
     # If it exist, return the value associated with key
     # Then, move that key:value pair to the end of the linked list
-    pass
-
-    # Else - return None
-
-
+    if key in self.dict:
+      # self.list.move_to_end({key:{self.dict[key]}})
+      return self.dict[key]
+    else:
+      return None
+      
   """
   Adds the given key-value pair to the cache. The newly-
   added pair should be considered the most-recently used
@@ -41,35 +42,59 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
+    print("In SET")
     # Conditions for adding values: Is the queue full?
     if self.current < 10:
+      print("LESS THAN TEN")
+
       # Is the key already in the queue?
       # If key already exist - replace old with new value for that key
       # Increment the current
-      if self.dict[key]:
+      if key in self.dict:
+        print("IF KEY EXISTS IN LESS THAN TEN")
+
         self.dict.update({key:value})
         self.current += 1
         # Update list - move that key to back of list
-        self.list.move_to_end({key:value})
+        # self.list.move_to_end({key:value})
+        return self.dict
 
       else:
+        print(self.dict, key)
+        print("IF KEY DOES NOT EXIST IN LESS THAN TEN")
+        print("Key:", key, "value:", value)
         self.dict[key] = value
+        print(self.dict)
         self.current += 1
+        print(self.current)
         # Update List - add value to back of list
-        self.list.add_to_tail({key:value})
-
+        # self.list.add_to_tail({key:value})
+        return self.dict
 
       # else - add new key and value
     elif self.current == 10:
+      print("EQUAL TEN IN Q")
+
       # Is the key already in the queue?
       # If key already exist, replace old with new value for that key
-      if self.dict[key]:
+      if key in self.dict:
+        print("IF KEY EXISTS IN EQUAL TO TEN")
+
         self.dict.update({key:value})
         # Update list - move that key to back of list
-        self.list.move_to_end({key:value})
+        # self.list.move_to_end({key:value})
+        return self.dict
+
 
       else:
+        print("IF KEY DOES NOT EXIST IN EQUAL TO TEN")
+
         # Remove the oldest entry and then add the new entry
-        self.list.remove_from_head()
+        # self.list.remove_from_head()
         # Update List - add value to back of list
-        self.list.add_to_tail({key:value})
+        # self.list.add_to_tail({key:value})
+        return self.dict
+
+
+# print("OUTSIDE", LRUCache().set("num1", "a"))
+
