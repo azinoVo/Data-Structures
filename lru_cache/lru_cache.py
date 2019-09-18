@@ -1,5 +1,8 @@
 from doubly_linked_list import DoublyLinkedList
 
+# We are using the dictionary as a way to give an index value toward the linked-list because
+# Linked Lists do not have an index
+
 class LRUCache:
   """
   Our LRUCache class keeps track of the max number of nodes it
@@ -27,7 +30,9 @@ class LRUCache:
     # Then, move that key:value pair to the end of the linked list
     if key in self.dict:
       # self.list.move_to_end({key:{self.dict[key]}})
-      return self.dict[key]
+      node = self.dict[key]
+      self.list.move_to_front(node)
+      return node.value[1]
     else:
       return None
       
@@ -42,59 +47,49 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    print("In SET")
-    # Conditions for adding values: Is the queue full?
-    if self.current < 10:
-      print("LESS THAN TEN")
+    # if self.current < self.limit:
+    #   # If key already exist - replace old with new value for that key
+    #   if key in self.dict:
+    #       node = self.dict[key]
+    #       node.value = (key, value)
+    #       self.list.move_to_front(node)
+    #       return
+    #   else:
+    #     self.list.add_to_head((key, value))
+    #     self.dict[key] = self.list.head
+    #     self.current += 1
 
-      # Is the key already in the queue?
-      # If key already exist - replace old with new value for that key
-      # Increment the current
-      if key in self.dict:
-        print("IF KEY EXISTS IN LESS THAN TEN")
+    # elif self.current == self.limit:
+    #   if key in self.dict:
+    #       node = self.dict[key]
+    #       node.value = (key, value)
+    #       self.list.move_to_front(node)
+    #       return
+    #   else:
+    #     del self.dict[self.list.tail.value[0]]
+    #     self.list.remove_from_tail()
+    #     self.current -= 1
+    
+    # Implementation from Lecture
 
-        self.dict.update({key:value})
-        self.current += 1
-        # Update list - move that key to back of list
-        # self.list.move_to_end({key:value})
-        return self.dict
+    # If key already exist, it doesn't matter if it's less or equal to ten because
+    # it will be changed or updated anyway
+    if key in self.dict:
+      node = self.dict[key]
+      node.value = (key, value)
 
-      else:
-        print(self.dict, key)
-        print("IF KEY DOES NOT EXIST IN LESS THAN TEN")
-        print("Key:", key, "value:", value)
-        self.dict[key] = value
-        print(self.dict)
-        self.current += 1
-        print(self.current)
-        # Update List - add value to back of list
-        # self.list.add_to_tail({key:value})
-        return self.dict
+      self.list.move_to_front(node)
+      return self.list
 
-      # else - add new key and value
-    elif self.current == 10:
-      print("EQUAL TEN IN Q")
+    # If current is equal to limit
+    if self.current == self.limit:
+      del self.dict[self.list.tail.value[0]]
+      self.list.remove_from_tail()
+      self.current -= 1
 
-      # Is the key already in the queue?
-      # If key already exist, replace old with new value for that key
-      if key in self.dict:
-        print("IF KEY EXISTS IN EQUAL TO TEN")
+    # This instance is anything less than limit and key is not in dict already
+    self.list.add_to_head((key, value))
+    self.dict[key] = self.list.head
+    self.current += 1
 
-        self.dict.update({key:value})
-        # Update list - move that key to back of list
-        # self.list.move_to_end({key:value})
-        return self.dict
-
-
-      else:
-        print("IF KEY DOES NOT EXIST IN EQUAL TO TEN")
-
-        # Remove the oldest entry and then add the new entry
-        # self.list.remove_from_head()
-        # Update List - add value to back of list
-        # self.list.add_to_tail({key:value})
-        return self.dict
-
-
-# print("OUTSIDE", LRUCache().set("num1", "a"))
 
