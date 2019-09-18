@@ -45,12 +45,31 @@ class LRUCache:
     if self.current < 10:
       # Is the key already in the queue?
       # If key already exist - replace old with new value for that key
-      pass
+      # Increment the current
+      if self.dict[key]:
+        self.dict.update({key:value})
+        self.current += 1
+        # Update list - move that key to back of list
+        self.list.move_to_end({key:value})
+
+      else:
+        self.dict[key] = value
+        self.current += 1
+        # Update List - add value to back of list
+        self.list.add_to_tail({key:value})
+
 
       # else - add new key and value
     elif self.current == 10:
       # Is the key already in the queue?
       # If key already exist, replace old with new value for that key
-      pass
+      if self.dict[key]:
+        self.dict.update({key:value})
+        # Update list - move that key to back of list
+        self.list.move_to_end({key:value})
 
-      # else - Remove the oldest entry in the queue and add the new key:value
+      else:
+        # Remove the oldest entry and then add the new entry
+        self.list.remove_from_head()
+        # Update List - add value to back of list
+        self.list.add_to_tail({key:value})
