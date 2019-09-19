@@ -49,9 +49,15 @@ class BinarySearchTree:
       return True
     else:
       if target > self.value:
-        return self.right.contains(target)
+        if self.right:
+          return self.right.contains(target)
+        else:
+          return False
       elif target < self.value:
-        return self.left.contains(target)
+        if self.left:
+          return self.left.contains(target)
+        else:
+          return False
 
   # * `get_max` returns the maximum value in the binary search tree.
   def get_max(self):
