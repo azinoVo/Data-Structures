@@ -44,12 +44,21 @@ class BinarySearchTree:
   # We know it's not found if we get to a node that doesn't have children
   def contains(self, target):
     # Traverse and check left and right nodes depending on current_node
-    pass
+    if target == self.value:
+      return True
+    else:
+      if target > self.value:
+        self.right.contains(target)
+      elif target < self.value:
+        self.left.contains(target)
 
   # * `get_max` returns the maximum value in the binary search tree.
   def get_max(self):
     # Go to the node all the way to the right
-    pass
+    if self.right:
+      self.right.get_max()
+    else:
+      return self.value
 
   # * `for_each` performs a traversal of _every_ node in the tree, executing
   # the passed-in callback function on each tree node value. There is a myriad of ways to
