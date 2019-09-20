@@ -1,3 +1,8 @@
+from doubly_linked_list import DoublyLinkedList
+
+# We are using the dictionary as a way to give an index value toward the linked-list because
+# Linked Lists do not have an index
+
 class LRUCache:
   """
   Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +12,10 @@ class LRUCache:
   to every node stored in the cache.
   """
   def __init__(self, limit=10):
-    pass
+    self.limit = limit
+    self.current = 0
+    self.list = DoublyLinkedList()
+    self.dict = {}
 
   """
   Retrieves the value associated with the given key. Also
@@ -17,8 +25,17 @@ class LRUCache:
   key-value pair doesn't exist in the cache. 
   """
   def get(self, key):
-    pass
-
+    # Does the key exist in our queue?
+    # If it exist, return the value associated with key
+    # Then, move that key:value pair to the end of the linked list
+    if key in self.dict:
+      # self.list.move_to_end({key:{self.dict[key]}})
+      node = self.dict[key]
+      self.list.move_to_front(node)
+      return node.value[1]
+    else:
+      return None
+      
   """
   Adds the given key-value pair to the cache. The newly-
   added pair should be considered the most-recently used
@@ -30,4 +47,50 @@ class LRUCache:
   the newly-specified value. 
   """
   def set(self, key, value):
-    pass
+    # if self.current < self.limit:
+    #   # If key already exist - replace old with new value for that key
+    #   if key in self.dict:
+    #       node = self.dict[key]
+    #       node.value = (key, value)
+    #       self.list.move_to_front(node)
+    #       return
+    #   else:
+    #     self.list.add_to_head((key, value))
+    #     self.dict[key] = self.list.head
+    #     self.current += 1
+
+    # elif self.current == self.limit:
+    #   if key in self.dict:
+    #       node = self.dict[key]
+    #       node.value = (key, value)
+    #       self.list.move_to_front(node)
+    #       return
+    #   else:
+    #     del self.dict[self.list.tail.value[0]]
+    #     self.list.remove_from_tail()
+    #     self.current -= 1
+    
+    # Implementation from Lecture
+
+    # If key already exist, it doesn't matter if it's less or equal to ten because
+    # it will be changed or updated anyway
+    if key in self.dict:
+      node = self.dict[key]
+      node.value = (key, value)
+
+      self.list.move_to_front(node)
+      return self.list
+
+    # If current is equal to limit
+    if self.current == self.limit:
+      del self.dict[self.list.tail.value[0]]
+      self.list.remove_from_tail()
+      self.current -= 1
+
+    # This instance is anything less than limit and key is not in dict already
+    self.list.add_to_head((key, value))
+    self.dict[key] = self.list.head
+    self.current += 1
+
+
+   
