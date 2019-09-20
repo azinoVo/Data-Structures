@@ -85,9 +85,15 @@ class BinarySearchTree:
   def in_order_dft(self, node):
     if node == None:
       return
-  
-    else: 
-      return
+
+    if node.left:
+      print(node.value)
+      node.left.in_order_dft(node.left)
+
+    if node.right:
+      print(node.value)
+      node.right.in_order_dft(node.right)
+
 
 #--------------------------------------------------------------------------------------
 
@@ -137,23 +143,20 @@ class BinarySearchTree:
 
   def dft_print(self, node):
     # same as bft but the functions are different pop/push instead of queue, dequeue
-    if self.value: 
       # Tree is not empty to start, traverse and apply to stack
       # Print value as one remove it from the stack
       # Does dequeue automatically return the item that is removed?
-      if self.right:
-        pass
-      if self.left:
-        pass
-      
-    else: # Tree is empty
-      return None
+      stack_list = Stack()
+      stack_list.push(node)
 
-
-
-
-
-
+      while stack_list.len() > 0:
+        current_node = stack_list.pop() 
+        print(current_node.value)
+        if current_node.left:
+          stack_list.push(current_node.left)
+        if current_node.right:
+          stack_list.push(current_node.right)
+   
 # STRETCH Goals --------------------------------------------------------------------------
     # Note: Research may be required
 
