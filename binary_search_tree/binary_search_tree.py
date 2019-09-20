@@ -76,15 +76,18 @@ class BinarySearchTree:
     if self.left:
       self.left.for_each(cb)
 
- # DAY 2 Project -----------------------
+ # DAY 2 Project ---------------------------------------------------------------------
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-  def in_order_print(self, node):
-    if self.value: # Tree is not empty to start, traverse and print
-      pass
-      
-    else: # Tree is empty
-      return None
+    # Same concept but manage the order
+    # Recursion left and right
+
+  def in_order_dft(self, node):
+    if node == None:
+      return
+  
+    else: 
+      return
 
 #--------------------------------------------------------------------------------------
 
@@ -103,14 +106,20 @@ class BinarySearchTree:
 
     # use Queue from import
 
-  def bft_print(self, node):
-    queue_list = Queue()
-    
-    if self.value: # Tree is not empty to start, traverse and apply to queue
-      pass
-      
-    else: # Tree is empty
-      return None
+  def bft_print(self, node):    
+      # Tree is not empty to start, traverse and apply to queue
+      # Print value as one remove it from the queue
+      # top to bottom, left to right - queue
+      queue_list = Queue()
+      queue_list.enqueue(node)
+
+      while queue_list.len() > 0:
+        current_node = queue_list.dequeue() 
+        print(current_node.value)
+        if current_node.left:
+          queue_list.enqueue(current_node.left)
+        if current_node.right:
+          queue_list.enqueue(current_node.right)
 
 #--------------------------------------------------------------------------------------
     # Print the value of every node, starting with the given node,
@@ -127,7 +136,22 @@ class BinarySearchTree:
     # use Stack from import
 
   def dft_print(self, node):
-    pass
+    # same as bft but the functions are different pop/push instead of queue, dequeue
+    if self.value: 
+      # Tree is not empty to start, traverse and apply to stack
+      # Print value as one remove it from the stack
+      # Does dequeue automatically return the item that is removed?
+      if self.right:
+        pass
+      if self.left:
+        pass
+      
+    else: # Tree is empty
+      return None
+
+
+
+
 
 
 # STRETCH Goals --------------------------------------------------------------------------
